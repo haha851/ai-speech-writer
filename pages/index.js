@@ -1,91 +1,124 @@
+
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Home() {
-  const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
+  const speechStyles = [
+    { title: 'Wedding Toast', icon: '💍' },
+    { title: 'Motivational', icon: '🔥' },
+    { title: 'Funny Roast', icon: '😂' },
+    { title: 'Graduation', icon: '🎓' },
+    { title: 'Farewell', icon: '✌️' },
+    { title: 'Birthday Speech', icon: '🎉' }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 text-gray-900 font-sans">
+    <div className="font-sans text-gray-900 bg-gradient-to-br from-yellow-50 to-pink-100 min-h-screen">
       <Head>
         <title>AI Speech Writer</title>
-        <meta name="description" content="Craft powerful speeches in seconds" />
+        <meta name="description" content="Craft powerful speeches with AI — personalized, fast, and memorable." />
       </Head>
 
-      <header className="text-center py-12 px-4 bg-white shadow">
-        <h1 className="text-5xl font-bold text-gray-800">AI Speech Writer</h1>
-        <p className="text-lg mt-4 max-w-xl mx-auto text-gray-600">
-          Craft powerful speeches in seconds. Just tell us the occasion, tone, and delivery method — we’ll handle the rest.
-        </p>
+      <header className="flex justify-between items-center px-6 py-4 shadow-lg bg-white sticky top-0 z-50">
+        <h1 className="text-3xl font-bold text-pink-600 tracking-tight">AI Speech</h1>
+        <nav className="space-x-6 text-sm font-semibold text-gray-700">
+          <a href="#features" className="hover:text-pink-500 transition">Features</a>
+          <a href="#pricing" className="hover:text-pink-500 transition">Pricing</a>
+          <a href="#samples" className="hover:text-pink-500 transition">Samples</a>
+          <a href="#contact" className="hover:text-pink-500 transition">Contact</a>
+        </nav>
       </header>
 
-      <main className="px-6 py-12 max-w-4xl mx-auto">
-        <section className="text-center mb-16">
-          <h2 className="text-3xl font-semibold mb-4">What You Get</h2>
-          <ul className="space-y-3 text-gray-700">
-            <li>✨ Custom speeches tailored to your tone</li>
-            <li>🗣️ Delivery tips included</li>
-            <li>⚡ Quick turnaround – 24 hours or less</li>
-            <li>📄 Draft preview before final version</li>
-            <li>🧠 Emotional impact built-in</li>
-          </ul>
+      <main className="text-center px-4 py-20">
+        <h2 data-aos="fade-up" className="text-6xl font-extrabold leading-tight max-w-4xl mx-auto text-pink-600 drop-shadow">
+          Speeches that Spark Joy
+        </h2>
+        <p data-aos="fade-up" data-aos-delay="200" className="mt-6 max-w-2xl mx-auto text-gray-600 text-lg">
+          Whether it’s a wedding, roast, graduation, or TED Talk — our AI delivers a powerful, custom-crafted speech in seconds.
+        </p>
+        <a
+          href="#pricing"
+          className="mt-10 inline-block px-8 py-4 bg-pink-600 text-white rounded-full shadow-lg hover:scale-105 hover:bg-pink-700 transition-transform"
+        >
+          Get Started
+        </a>
+
+        <section id="features" className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
+          {[
+            ['Personalized', 'Tell us the tone, style, and purpose — we do the rest.'],
+            ['Fast Delivery', 'Get a draft in minutes, not hours.'],
+            ['Real Talk', 'No robotic tone. Just real, relatable content.']
+          ].map(([title, desc], i) => (
+            <div
+              key={i}
+              className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all"
+              data-aos="fade-up"
+              data-aos-delay={i * 100}
+            >
+              <h3 className="text-xl font-bold text-pink-600 mb-2">{title}</h3>
+              <p className="text-gray-700">{desc}</p>
+            </div>
+          ))}
         </section>
 
-        <section className="bg-white shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">Get Started</h2>
-          {!submitted ? (
-            <form
-              action="https://formspree.io/f/mgegjzyv"
-              method="POST"
-              onSubmit={() => setSubmitted(true)}
-              className="space-y-4"
-            >
-              <input name="name" className="w-full p-3 border rounded" placeholder="Your Name" required />
-              <input name="email" type="email" className="w-full p-3 border rounded" placeholder="Email" required />
-              <input name="occasion" className="w-full p-3 border rounded" placeholder="Occasion (e.g., Wedding Toast)" required />
-              <select name="tone" className="w-full p-3 border rounded" required>
-                <option value="">Preferred Tone</option>
-                <option>Formal</option>
-                <option>Casual</option>
-                <option>Funny</option>
-                <option>Inspiring</option>
-              </select>
-              <select name="delivery" className="w-full p-3 border rounded">
-                <option value="">Delivery Method</option>
-                <option>Read from paper</option>
-                <option>Memorized</option>
-                <option>Teleprompter</option>
-              </select>
-              <textarea name="details" className="w-full p-3 border rounded" placeholder="Anything else we should know?" rows="4"></textarea>
-              <button className="w-full bg-black text-white p-3 rounded" type="submit">Submit</button>
-            </form>
-          ) : (
-            <p className="text-center text-green-600 text-lg font-semibold">Thank you! We'll be in touch soon.</p>
-          )}
-          <div className="mt-8 text-center">
-            <a
-              href="https://www.checkya.com/openlegacygroup"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded shadow"
-            >
-              💳 Pay with CheckYa
-            </a>
+        <section id="pricing" className="mt-24 px-6 max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6 text-pink-600">Pricing</h2>
+          <p className="text-lg text-gray-700 mb-4">Regular price: <span className="line-through">$90/min</span></p>
+          <p className="text-2xl font-extrabold text-pink-700 mb-6">Now only $15/min!</p>
+          <a
+            href="https://checkya.com/openlegacygroup"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-pink-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-pink-700 transition-transform transform hover:scale-105"
+          >
+            Purchase Speech
+          </a>
+        </section>
+
+        <section id="samples" className="mt-24 px-6 max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-8 text-pink-600" data-aos="fade-up">Speech Styles</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {speechStyles.map(({ title, icon }, i) => (
+              <div
+                key={i}
+                className="rounded-xl bg-pink-100 p-6 shadow hover:scale-105 transition"
+                data-aos="zoom-in"
+                data-aos-delay={i * 100}
+              >
+                <div className="text-4xl mb-3">{icon}</div>
+                <h4 className="text-xl font-semibold text-pink-700 mb-2">{title}</h4>
+                <p className="text-sm text-gray-700">Preview a sample of what our AI can craft for this style.</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="mt-16 text-center">
-          <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
-          <div className="flex justify-center space-x-6 text-gray-600 text-2xl">
-            <a href="#" aria-label="Twitter">🐦</a>
-            <a href="#" aria-label="Instagram">📸</a>
-            <a href="#" aria-label="LinkedIn">💼</a>
-            <a href="#" aria-label="TikTok">🎵</a>
-          </div>
+        <section id="contact" className="mt-24 px-6 max-w-xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4 text-pink-600 text-center" data-aos="fade-up">Let's Chat</h2>
+          <form
+            action="https://formspree.io/f/mgegjzyv"
+            method="POST"
+            className="bg-white p-6 rounded-2xl shadow-lg space-y-4"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <input name="name" type="text" required className="w-full p-3 border border-gray-300 rounded" placeholder="Your Name" />
+            <input name="email" type="email" required className="w-full p-3 border border-gray-300 rounded" placeholder="Email Address" />
+            <textarea name="message" required className="w-full p-3 border border-gray-300 rounded" placeholder="Your Message" rows="4"></textarea>
+            <button type="submit" className="w-full bg-pink-600 text-white py-3 rounded-full hover:bg-pink-700 transition">Send</button>
+          </form>
         </section>
       </main>
 
-      <footer className="text-center py-6 text-sm text-gray-500 mt-20">
-        &copy; 2025 AI Speech Writer. Powered by <a href="https://arthuriverson.xyz" className="underline">arthuriverson.xyz</a>
+      <footer className="text-center text-sm text-gray-500 py-10">
+        <p>Contact us at: <a href="mailto:hi@arthuriverson.xyz" className="text-pink-600 hover:underline">hi@arthuriverson.xyz</a></p>
+        <p>© {new Date().getFullYear()} AI Speech Writer — Built with love.</p>
       </footer>
     </div>
   );
